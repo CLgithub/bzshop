@@ -1,0 +1,31 @@
+package com.cl.content.feign;
+
+import com.cl.pojo.TbContentCategory;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
+/**
+ * @Author l
+ * @Date 2021/3/16 22:53
+ */
+@Component
+@FeignClient(value = "cloud-common-content")
+public interface CloudCommonContentFeignClient {
+
+
+    // ---------------------/service/contentCategory
+    @RequestMapping("/service/contentCategory/selectContentCategoryByParentId")
+    List<TbContentCategory> selectContentCategoryByParentId(@RequestParam("parentId") Long parentId);
+
+    @RequestMapping("/service/contentCategory/insertContentCategory")
+    Integer insertContentCategory(@RequestBody TbContentCategory tbContentCategory);
+
+    @RequestMapping("/service/contentCategory/deleteContentCategoryById")
+    Integer deleteContentCategoryById(@RequestParam("categoryId") Long categoryId);
+
+}
