@@ -68,4 +68,19 @@ public class ContentCategoryController {
         return Result.build(500,"error");
     }
 
+    /**
+     * 修改内容分类名称
+     * @param tbContentCategory
+     * @return
+     */
+    @RequestMapping("/updateContentCategory")
+    public Result updateContentCategory(TbContentCategory tbContentCategory){
+        try {
+            return contentCategoryService.updateContentCategory(tbContentCategory);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500,"error");
+    }
+
 }

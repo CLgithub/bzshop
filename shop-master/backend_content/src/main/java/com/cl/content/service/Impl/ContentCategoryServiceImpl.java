@@ -52,4 +52,14 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         }
         return Result.error("删除失败");
     }
+
+    @Override
+    @LcnTransaction
+    public Result updateContentCategory(TbContentCategory tbContentCategory) {
+        Integer integer = cloudCommonContentFeignClient.updateContentCategory(tbContentCategory);
+        if(integer!=null && integer!=0){
+            return Result.ok(integer);
+        }
+        return Result.error("修改失败");
+    }
 }

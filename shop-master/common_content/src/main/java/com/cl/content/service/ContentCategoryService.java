@@ -30,4 +30,13 @@ public interface ContentCategoryService {
      * @return
      */
     Integer deleteContentCategoryById(Long categoryId);
+
+    /**
+     * 修改内容分类
+     * @param tbContentCategory
+     * @return
+     */
+    Integer updateContentCategory(TbContentCategory tbContentCategory);
+
+
 }

@@ -49,4 +49,16 @@ public class ContentCategoryController {
     public Integer deleteContentCategoryById(@RequestParam Long categoryId){
         return contentCategoryService.deleteContentCategoryById(categoryId);
     }
+
+    /**
+     * 修改内容分类
+     * @return
+     */
+    @RequestMapping("/updateContentCategory")
+    public Integer updateContentCategory(@RequestBody TbContentCategory tbContentCategory){
+        return contentCategoryService.updateContentCategory(tbContentCategory);
+    }
+
+
+
 }

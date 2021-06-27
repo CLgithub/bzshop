@@ -72,6 +72,7 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         return status;
     }
 
+    @LcnTransaction
     private Integer deleteNode(TbContentCategory tbContentCategory) {
         if(tbContentCategory.getIsParent()){
             TbContentCategoryExample e2=new TbContentCategoryExample();
@@ -88,4 +89,13 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         }
         return 200;
     }
+
+    @Override
+    @LcnTransaction
+    public Integer updateContentCategory(TbContentCategory tbContentCategory) {
+        tbContentCategory.setUpdated(new Date());
+        return tbContentCategoryMapper.updateByPrimaryKeySelective(tbContentCategory);
+    }
+
+
 }

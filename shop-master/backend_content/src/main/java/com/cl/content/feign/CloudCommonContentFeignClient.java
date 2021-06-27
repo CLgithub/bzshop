@@ -1,5 +1,6 @@
 package com.cl.content.feign;
 
+import com.cl.gzshop.utils.PageResult;
 import com.cl.pojo.TbContentCategory;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -28,4 +29,12 @@ public interface CloudCommonContentFeignClient {
     @RequestMapping("/service/contentCategory/deleteContentCategoryById")
     Integer deleteContentCategoryById(@RequestParam("categoryId") Long categoryId);
 
+    @RequestMapping("/service/contentCategory/updateContentCategory")
+    Integer updateContentCategory(@RequestBody TbContentCategory tbContentCategory);
+
+    // ---------------------/service/content
+    @RequestMapping("/service/content/selectTbContentAllByCategoryId")
+    PageResult selectTbContentAllByCategoryId(@RequestParam("page") Integer page, @RequestParam("rows") Integer rows, @RequestParam("categoryId") Long categoryId);
+
 }
+
