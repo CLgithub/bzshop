@@ -5,12 +5,14 @@ import com.cl.gzshop.utils.PageResult;
 import com.cl.mapper.TbContentMapper;
 import com.cl.pojo.TbContent;
 import com.cl.pojo.TbContentExample;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import javafx.scene.control.TableColumnBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +41,20 @@ public class ContentServiceImpl implements ContentService {
         pageResult.setTotalPage(pageInfo.getTotal());
 
         return pageResult;
+    }
+
+    @Override
+    @LcnTransaction
+    public Integer insertTbContent(TbContent tbContent) {
+        tbContent.setCreated(new Date());
+        tbContent.setUpdated(new Date());
+        return tbContentMapper.insert(tbContent);
+    }
+
+    @Override
+    @LcnTransaction
+    public Integer deleteContentByIds(Long ids) {
+        return tbContentMapper.deleteByPrimaryKey(ids);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.cl.content.service;
 
 import com.cl.gzshop.utils.Result;
+import com.cl.pojo.TbContent;
 
 /**
  * @Author l
@@ -15,4 +16,17 @@ public interface ContentService {
      */
     Result selectTbContentAllByCategoryId(Integer page, Integer rows, Long categoryId);
 
+    /**
+     * 根据分类添加内容
+     * @param tbContent
+     * @return
+     */
+    Result insertTbContent(TbContent tbContent);
+
+    /**
+     * 根据id，删除内容
+     * @param ids
+     * @return
+     */
+    Result deleteContentByIds(Long ids);
 }

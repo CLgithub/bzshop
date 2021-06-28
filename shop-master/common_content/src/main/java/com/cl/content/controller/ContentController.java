@@ -5,6 +5,7 @@ import com.cl.gzshop.utils.PageResult;
 import com.cl.pojo.TbContent;
 import com.cl.pojo.TbContentCategory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,26 @@ public class ContentController {
     @RequestMapping("/selectTbContentAllByCategoryId")
     public PageResult selectTbContentAllByCategoryId(@RequestParam Integer page, @RequestParam Integer rows, @RequestParam Long categoryId){
         return contentService.selectTbContentAllByCategoryId(page, rows, categoryId);
+    }
+
+    /**
+     * 根据分类添加内容
+     * @param tbContent
+     * @return
+     */
+    @RequestMapping("/insertTbContent")
+    public Integer insertTbContent(@RequestBody TbContent tbContent){
+        return contentService.insertTbContent(tbContent);
+    }
+
+    /**
+     * 根据内容分类内容id，删除内容分类内容
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/deleteContentByIds")
+    public Integer deleteContentByIds(@RequestParam Long ids){
+        return contentService.deleteContentByIds(ids);
     }
 
 }

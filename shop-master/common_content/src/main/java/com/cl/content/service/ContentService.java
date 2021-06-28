@@ -19,4 +19,18 @@ public interface ContentService {
      * @return
      */
     PageResult selectTbContentAllByCategoryId(Integer page, Integer rows, Long categoryId);
+
+    /**
+     * 根据分类添加内容
+     * @param tbContent
+     * @return
+     */
+    Integer insertTbContent(TbContent tbContent);
+
+    /**
+     * 根据内容分类内容id，删除内容分类内容
+     * @param ids
+     * @return
+     */
+    Integer deleteContentByIds(Long ids);
 }

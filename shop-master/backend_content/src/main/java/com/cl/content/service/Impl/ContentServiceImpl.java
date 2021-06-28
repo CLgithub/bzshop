@@ -4,6 +4,8 @@ import com.cl.content.feign.CloudCommonContentFeignClient;
 import com.cl.content.service.ContentService;
 import com.cl.gzshop.utils.PageResult;
 import com.cl.gzshop.utils.Result;
+import com.cl.pojo.TbContent;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,25 @@ public class ContentServiceImpl implements ContentService {
             return Result.ok(pageResult);
         }
         return Result.error("查询有误");
+    }
+
+    @Override
+    @LcnTransaction
+    public Result insertTbContent(TbContent tbContent) {
+        Integer integer = cloudCommonContentFeignClient.insertTbContent(tbContent);
+        if(integer!=null && integer!=0){
+            return Result.ok();
+        }
+        return Result.error("插入失败");
+    }
+
+    @Override
+    @LcnTransaction
+    public Result deleteContentByIds(Long ids) {
+        Integer integer = cloudCommonContentFeignClient.deleteContentByIds(ids);
+        if(integer!=null && integer!=0){
+            return Result.ok();
+        }
+        return Result.error("删除失败");
     }
 }
