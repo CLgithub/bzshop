@@ -1,5 +1,6 @@
 package com.cl.item.service;
 
+import com.cl.gzshop.utils.CatResult;
 import com.cl.pojo.TbItemCat;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -17,4 +18,10 @@ public interface ItemCategoryService {
      * @return
      */
     List<TbItemCat> selectItemCategoryByParentId(Long parentId);
+
+    /**
+     * 查询首页商品分类
+     * @return
+     */
+    CatResult selectItemCategoryAll();
 }

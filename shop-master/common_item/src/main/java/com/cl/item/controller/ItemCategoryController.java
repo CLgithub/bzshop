@@ -1,5 +1,6 @@
 package com.cl.item.controller;
 
+import com.cl.gzshop.utils.CatResult;
 import com.cl.item.service.ItemCategoryService;
 import com.cl.pojo.TbItemCat;
 import com.github.pagehelper.PageInfo;
@@ -23,13 +24,22 @@ public class ItemCategoryController {
     private ItemCategoryService itemCategoryService;
 
     /**
-     *
+     * 通过商品类目id，查询商品类目
      * @param parentId
      * @return
      */
     @RequestMapping("/selectItemCategoryByParentId")
     public List<TbItemCat> selectItemCategoryByParentId(@RequestParam Long parentId){
         return itemCategoryService.selectItemCategoryByParentId(parentId);
+    }
+
+    /**
+     * 查询首页商品分类
+     * @return
+     */
+    @RequestMapping("/selectItemCategoryAll")
+    public CatResult selectItemCategoryAll(){
+        return itemCategoryService.selectItemCategoryAll();
     }
 
 }

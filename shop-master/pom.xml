@@ -20,6 +20,7 @@
         <module>common_txlcn</module>
         <module>common_content</module>
         <module>backend_content</module>
+        <module>frontend_portal</module>
     </modules>
 
     <!-- 依赖版本 -->

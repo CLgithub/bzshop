@@ -17,7 +17,7 @@ import java.util.List;
  * @Date 2020/9/24 09:41
  */
 @RestController
-@RequestMapping(("/backend/itemCategory"))
+@RequestMapping("/backend/itemCategory")
 public class ItemCategoryController {
 
     @Autowired

@@ -5,7 +5,7 @@ const base = {
     searchBaseUrl: "/search_api/frontend_search",
     registerBaseUrl: "/register_api/frontend_sso",
     payMentBaseUrl:"/payment_api/frontend_order",
-    menuItem: "/itemCategory/selectItemCategoryAll",        // 左侧菜单
+    menuItem: "/frontend/itemCategory/selectItemCategoryAll",        // 左侧菜单
     search: "/search/list",                                 // 搜索接口
     selectFrontendContentByAD: "/content/selectFrontendContentByAD",// 首页 焦点轮播图接口
     register: '/sso/userRegister',                          // 注册接口
