@@ -1,9 +1,11 @@
 package com.cl.content.service;
 
+import com.cl.gzshop.utils.CatResult;
 import com.cl.gzshop.utils.PageResult;
 import com.cl.pojo.TbContent;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author l
@@ -33,4 +35,10 @@ public interface ContentService {
      * @return
      */
     Integer deleteContentByIds(Long ids);
+
+    /**
+     * 查询首页大广告位内容
+     * @return
+     */
+    List<Map> selectFrontendContentByAD();
 }

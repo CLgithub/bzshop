@@ -1,6 +1,7 @@
 package com.cl.content.controller;
 
 import com.cl.content.service.ContentService;
+import com.cl.gzshop.utils.CatResult;
 import com.cl.gzshop.utils.PageResult;
 import com.cl.pojo.TbContent;
 import com.cl.pojo.TbContentCategory;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品内容
@@ -54,4 +56,12 @@ public class ContentController {
         return contentService.deleteContentByIds(ids);
     }
 
+    /**
+     * 查询首页大广告位内容
+     * @return
+     */
+    @RequestMapping("/selectFrontendContentByAD")
+    public List<Map> selectFrontendContentByAD(){
+        return contentService.selectFrontendContentByAD();
+    }
 }

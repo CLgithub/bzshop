@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient(value = "cloud-common-item")
 public interface CloudCommonItemFeignClient {
 
-    //---------------/Service/ItemCategory
+    //---------------/service/itemCategory
 
     @RequestMapping("/service/itemCategory/selectItemCategoryAll")
     CatResult selectItemCategoryAll();

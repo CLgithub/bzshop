@@ -7,7 +7,7 @@ const base = {
     payMentBaseUrl:"/payment_api/frontend_order",
     menuItem: "/frontend/itemCategory/selectItemCategoryAll",        // 左侧菜单
     search: "/search/list",                                 // 搜索接口
-    selectFrontendContentByAD: "/content/selectFrontendContentByAD",// 首页 焦点轮播图接口
+    selectFrontendContentByAD: "/frontend/content/selectFrontendContentByAD",// 首页 焦点轮播图接口
     register: '/sso/userRegister',                          // 注册接口
     checkRegister: "/sso/checkUserInfo",                    // 注册验证
     login: "/sso/userLogin",                                // 登陆接口
