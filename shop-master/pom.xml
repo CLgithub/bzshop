@@ -21,6 +21,7 @@
         <module>common_content</module>
         <module>backend_content</module>
         <module>frontend_portal</module>
+        <module>common_redis</module>
     </modules>
 
     <!-- 依赖版本 -->
@@ -127,4 +128,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
