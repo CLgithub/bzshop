@@ -4,6 +4,7 @@ import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 @MapperScan("com.cl.mapper")    // 扫描mapper映射文件
 @EnableDistributedTransaction   // 启用分布式事务管理器 tx-lcn
+@EnableCaching
 public class CommonItemApplication {
     public static void main(String[] args) {
         SpringApplication.run(CommonItemApplication.class, args);
