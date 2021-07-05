@@ -5,9 +5,13 @@ import com.cl.item.service.ItemCategoryService;
 import com.cl.mapper.TbItemCatMapper;
 import com.cl.pojo.TbItemCat;
 import com.cl.pojo.TbItemCatExample;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +25,15 @@ import java.util.Map;
  */
 @Service
 @CacheConfig(cacheNames="itemCategory")
+//@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ItemCategoryServiceImpl implements ItemCategoryService{
+
+//    private ItemCategoryService _this;
+//
+//    @Autowired
+//    public ItemCategoryServiceImpl(ItemCategoryService itemCategoryService){
+//        _this=itemCategoryService;
+//    }
 
     @Resource
     private TbItemCatMapper tbItemCatMapper;
@@ -39,7 +51,6 @@ public class ItemCategoryServiceImpl implements ItemCategoryService{
         return tbItemCats;
     }
 
-//    探索无参数方法缓存办法
     @Override
     @Cacheable(key = "#root.methodName")
     public CatResult selectItemCategoryAll() {
@@ -55,7 +66,7 @@ public class ItemCategoryServiceImpl implements ItemCategoryService{
      * @return
      */
     private List<Map<String,Object>> getCatList(Long parendtId) {
-        List<TbItemCat> tbItemCats = this.itemCategoryService.selectItemCategoryByParentId(parendtId);
+        List<TbItemCat> tbItemCats = itemCategoryService.selectItemCategoryByParentId(parendtId);
         List list=new ArrayList<>();
         int count=0;
         for(TbItemCat tbItemCat:tbItemCats){

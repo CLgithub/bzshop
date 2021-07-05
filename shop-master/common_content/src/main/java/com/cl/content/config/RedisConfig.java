@@ -1,4 +1,4 @@
-package com.cl.item.config;
+package com.cl.content.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

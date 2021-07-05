@@ -12,6 +12,9 @@ import com.github.pagehelper.PageInfo;
 import javafx.scene.control.TableColumnBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,6 +24,7 @@ import java.util.*;
  * @Date 2021/6/4 16:32
  */
 @Service
+@CacheConfig(cacheNames="content")
 public class ContentServiceImpl implements ContentService {
 
     @Autowired
@@ -30,6 +34,7 @@ public class ContentServiceImpl implements ContentService {
     private Long AD;
 
     @Override
+    @Cacheable(unless="#result == null")
     public PageResult selectTbContentAllByCategoryId(Integer page, Integer rows, Long categoryId) {
         PageHelper.startPage(page,rows);
         TbContentExample tbContentExample = new TbContentExample();
@@ -49,6 +54,7 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries=true)
     public Integer insertTbContent(TbContent tbContent) {
         tbContent.setCreated(new Date());
         tbContent.setUpdated(new Date());
@@ -57,11 +63,13 @@ public class ContentServiceImpl implements ContentService {
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries=true)
     public Integer deleteContentByIds(Long ids) {
         return tbContentMapper.deleteByPrimaryKey(ids);
     }
 
     @Override
+    @Cacheable(key = "#root.methodName")
     public List<Map> selectFrontendContentByAD() {
         List<Map> listMap=new ArrayList<>();
         TbContentExample tbContentExample = new TbContentExample();
