@@ -21,6 +21,7 @@
         <module>common_content</module>
         <module>backend_content</module>
         <module>frontend_portal</module>
+        <module>frontend_search</module>
     </modules>
 
     <!-- 依赖版本 -->
