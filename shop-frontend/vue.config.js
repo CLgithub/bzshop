@@ -12,7 +12,7 @@ module.exports = {
                 changeOrigin: true
             },
             '/search_api': {
-                target: 'http://127.0.0.1:9030',
+                target: 'http://127.0.0.1:9100',
                 pathRewrite: {
                     '^/search_api': ''
                 },
