@@ -5,12 +5,6 @@ import com.cl.gzshop.utils.SolrDocument;
 import com.cl.mapper.SolrItemMapper;
 import com.cl.pojo.SolrItem;
 import com.cl.search.service.SolrService;
-import com.netflix.discovery.converters.Auto;
-import org.apache.solr.client.solrj.SolrClient;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.impl.HttpSolrClient;
-import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,9 +16,7 @@ import org.springframework.data.solr.core.query.SimpleHighlightQuery;
 import org.springframework.data.solr.core.query.result.HighlightEntry;
 import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Service;
-import sun.misc.Cache;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
