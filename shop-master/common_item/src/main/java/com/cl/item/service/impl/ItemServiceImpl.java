@@ -105,4 +105,10 @@ public class ItemServiceImpl implements ItemService{
         map.put("itemCat", tbItemCat.getName());
         return map;
     }
+
+    @Override
+    public TbItem selectItemInfo(Long itemId) {
+        TbItem tbItem = tbItemMapper.selectByPrimaryKey(itemId);
+        return tbItem;
+    }
 }

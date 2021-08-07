@@ -74,4 +74,13 @@ public class ItemController {
         return this.itemService.updateItemById(tbItem);
     }
 
+    /**
+     * 根据商品ID查询商品
+     * @return
+     */
+    @RequestMapping("/selectItemInfo")
+    public TbItem selectItemInfo(@RequestParam Long itemId){
+        return itemService.selectItemInfo(itemId);
+    }
+
 }

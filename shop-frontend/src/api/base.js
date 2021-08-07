@@ -12,7 +12,7 @@ const base = {
     checkRegister: "/sso/checkUserInfo",                    // 注册验证
     login: "/sso/userLogin",                                // 登陆接口
     logOut:"/sso/logOut",                                   // 退出登陆
-    selectItemInfo: "/item/selectItemInfo",                 // 商品详情页 详情接口
+    selectItemInfo: "/frontend/item/selectItemInfo",                 // 商品详情页 详情接口
     selectItemDescByItemId: "/item/selectItemDescByItemId", // 商品详情页 商品介绍
     selectTbItemParamItemByItemId: "/item/selectTbItemParamItemByItemId",// 商品详情页 规格参数
     addItem: "/cart/addItem/",                              // 加入购物车

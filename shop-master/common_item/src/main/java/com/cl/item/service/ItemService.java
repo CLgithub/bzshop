@@ -50,4 +50,12 @@ public interface ItemService {
      * @return
      */
     Map<String,Object> preUpdateItem(Long itemId);
+
+    /**
+     * 根据商品ID查询商品
+     * @param itemId
+     * @return
+     */
+    TbItem selectItemInfo(Long itemId);
+
 }
