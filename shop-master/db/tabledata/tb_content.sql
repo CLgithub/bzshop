@@ -1,3 +1,0 @@
-INSERT INTO springcloudbzsc.tb_content (category_id,title,sub_title,title_desc,url,pic,pic2,content,created,updated) VALUES
-	 (108,'大广告位','fdsfa','','fsdafsd','http://127.0.0.1/2021/06/28/1624853826418284.jpg',NULL,'<p>fdafsa</p>','2021-06-28 06:05:16','2021-06-28 06:05:16'),
-	 (108,'大广告2','大广告位子标题','','http://www.baidu.com','http://127.0.0.1/2021/06/30/1625037539767464.png',NULL,'<p><strong>内</strong>容</p>','2021-06-30 07:19:20','2021-06-30 07:19:20');
