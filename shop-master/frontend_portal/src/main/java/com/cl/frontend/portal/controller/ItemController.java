@@ -2,7 +2,6 @@ package com.cl.frontend.portal.controller;
 
 import com.cl.frontend.portal.service.ItemService;
 import com.cl.gzshop.utils.Result;
-import com.cl.pojo.TbItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +25,23 @@ public class ItemController {
     @RequestMapping("/selectItemInfo")
     public Result selectItemInfo(@RequestParam Long itemId){
         try {
+
             return itemService.selectItemInfo(itemId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500,"error");
+    }
+
+    /**
+     * 根据商品ID，查询商品描述
+     * @param itemId
+     * @return
+     */
+    @RequestMapping("/selectItemDescByItemId")
+    public Result selectItemDescByItemId(@RequestParam Long itemId){
+        try {
+            return itemService.selectItemDescByItemId(itemId);
         } catch (Exception e){
             e.printStackTrace();
         }

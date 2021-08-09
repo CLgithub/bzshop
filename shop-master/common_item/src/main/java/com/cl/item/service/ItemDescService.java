@@ -1,7 +1,6 @@
 package com.cl.item.service;
 
 import com.cl.pojo.TbItemDesc;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 商品描述
@@ -23,4 +22,11 @@ public interface ItemDescService {
      * @return
      */
     Integer updateItemDesc(TbItemDesc tbItemDesc);
+
+    /**
+     * 根据商品ID，查询商品描述
+     * @param itemId
+     * @return
+     */
+    TbItemDesc selectItemDescByItemId(Long itemId);
 }

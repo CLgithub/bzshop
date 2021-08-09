@@ -76,6 +76,7 @@ public class ItemController {
 
     /**
      * 根据商品ID查询商品
+     * @param itemId
      * @return
      */
     @RequestMapping("/selectItemInfo")

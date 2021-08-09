@@ -2,10 +2,7 @@ package com.cl.item.controller;
 
 import com.cl.item.service.ItemDescService;
 import com.cl.pojo.TbItemDesc;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -36,5 +33,15 @@ public class ItemDescController {
     @RequestMapping("/updateItemDesc")
     public Integer updateItemDesc(@RequestBody TbItemDesc tbItemDesc){
         return this.itemDescService.updateItemDesc(tbItemDesc);
+    }
+
+    /**
+     * 根据商品ID，查询商品描述
+     * @param itemId
+     * @return
+     */
+    @RequestMapping("/selectItemDescByItemId")
+    public TbItemDesc selectItemDescByItemId(@RequestParam Long itemId){
+        return itemDescService.selectItemDescByItemId(itemId);
     }
 }

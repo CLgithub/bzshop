@@ -14,4 +14,11 @@ public interface ItemService {
      * @return
      */
     Result selectItemInfo(Long itemId);
+
+    /**
+     * 根据商品ID，查询商品描述
+     * @param itemId
+     * @return
+     */
+    Result selectItemDescByItemId(Long itemId);
 }
