@@ -11,6 +11,9 @@ import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,6 +27,7 @@ import java.util.Map;
  * @Date 2020/9/21 20:35
  */
 @Service
+@CacheConfig(cacheNames="item")
 public class ItemServiceImpl implements ItemService{
 
     @Resource
@@ -51,6 +55,7 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    @Cacheable(unless="#result == null")
     public PageResult selectTbItemAllByPage(Integer page, Integer rows) {
         Page<Object> page1 = PageHelper.startPage(page, rows);
 
@@ -70,6 +75,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries=true)
     public Integer insertTbItem(TbItem tbItem) {
         int insert = this.tbItemMapper.insert(tbItem);
         return insert;
@@ -77,6 +83,7 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries=true)
     public Integer updateItemById(TbItem tbItem) {
         tbItem.setUpdated(new Date());
         int i = tbItemMapper.updateByPrimaryKeySelective(tbItem); // 有哪个字段，更新哪个字段，没有不更新
@@ -107,8 +114,8 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
+    @Cacheable(unless="#result == null")
     public TbItem selectItemInfo(Long itemId) {
-        TbItem tbItem = tbItemMapper.selectByPrimaryKey(itemId);
-        return tbItem;
+        return tbItemMapper.selectByPrimaryKey(itemId);
     }
 }
