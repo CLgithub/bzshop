@@ -48,4 +48,19 @@ public class ItemController {
         return Result.build(500,"error");
     }
 
+    /**
+     * 根据商品id，查询商品规格参数
+     * @param itemId
+     * @return
+     */
+    @RequestMapping("/selectTbItemParamItemByItemId")
+    public Result selectTbItemParamItemByItemId(@RequestParam Long itemId){
+        try {
+            return itemService.selectTbItemParamItemByItemId(itemId);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500,"error");
+    }
+
 }

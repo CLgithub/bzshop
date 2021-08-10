@@ -23,4 +23,11 @@ public interface  ItemParamItemService {
      * @return
      */
     Integer updateTbItemParamItem(TbItemParamItem tbItemParamItem);
+
+    /**
+     * 根据商品id
+     * @param itemId
+     * @return
+     */
+    TbItemParamItem selectTbItemParamItemByItemId(Long itemId);
 }

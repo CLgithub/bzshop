@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author l
@@ -35,5 +36,17 @@ public class ItemParamItemServiceImpl implements ItemParamItemService {
         TbItemParamItemExample.Criteria criteria = tbItemParamItemExample.createCriteria();
         criteria.andItemIdEqualTo(tbItemParamItem.getItemId());
         return this.itemParamItemMapper.updateByExampleSelective(tbItemParamItem,tbItemParamItemExample);
+    }
+
+    @Override
+    public TbItemParamItem selectTbItemParamItemByItemId(Long itemId) {
+        TbItemParamItemExample tbItemParamItemExample=new TbItemParamItemExample();
+        TbItemParamItemExample.Criteria criteria = tbItemParamItemExample.createCriteria();
+        criteria.andItemIdEqualTo(itemId);
+        List<TbItemParamItem> tbItemParamItems = itemParamItemMapper.selectByExampleWithBLOBs(tbItemParamItemExample);
+        if(tbItemParamItems!=null){
+            return tbItemParamItems.get(0);
+        }
+        return null;
     }
 }

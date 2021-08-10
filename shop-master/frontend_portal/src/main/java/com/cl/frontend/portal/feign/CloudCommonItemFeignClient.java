@@ -3,6 +3,7 @@ package com.cl.frontend.portal.feign;
 import com.cl.gzshop.utils.CatResult;
 import com.cl.pojo.TbItem;
 import com.cl.pojo.TbItemDesc;
+import com.cl.pojo.TbItemParamItem;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,4 +38,13 @@ public interface CloudCommonItemFeignClient {
      */
     @RequestMapping("/service/itemDesc/selectItemDescByItemId")
     TbItemDesc selectItemDescByItemId(@RequestParam("itemId") Long itemId);
+
+    /**
+     * 根据商品id，查询商品规格参数
+     * @param itemId
+     * @return
+     */
+    @RequestMapping("/service/itemParamItem/selectTbItemParamItemByItemId")
+    TbItemParamItem selectTbItemParamItemByItemId(@RequestParam("itemId") Long itemId);
+
 }

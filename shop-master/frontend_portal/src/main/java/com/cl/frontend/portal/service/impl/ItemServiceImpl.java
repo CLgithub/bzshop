@@ -5,6 +5,7 @@ import com.cl.frontend.portal.service.ItemService;
 import com.cl.gzshop.utils.Result;
 import com.cl.pojo.TbItem;
 import com.cl.pojo.TbItemDesc;
+import com.cl.pojo.TbItemParamItem;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -33,6 +34,15 @@ public class ItemServiceImpl implements ItemService {
         TbItemDesc tbItemDesc = cloudCommonItemFeignClient.selectItemDescByItemId(itemId);
         if(tbItemDesc!=null){
             return Result.ok(tbItemDesc);
+        }
+        return Result.error("查询有误");
+    }
+
+    @Override
+    public Result selectTbItemParamItemByItemId(Long itemId) {
+        TbItemParamItem tbItemParamItem = cloudCommonItemFeignClient.selectTbItemParamItemByItemId(itemId);
+        if(tbItemParamItem!=null){
+            return Result.ok(tbItemParamItem);
         }
         return Result.error("查询有误");
     }
