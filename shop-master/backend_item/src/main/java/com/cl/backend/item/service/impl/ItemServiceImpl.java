@@ -93,7 +93,7 @@ public class ItemServiceImpl implements ItemService{
     @Override
     @LcnTransaction
     public Result updateTbItem(TbItem tbItem, String desc, String itemParams) {
-        Integer integer = cloudCommonItemFeignClient.updateTbitem(tbItem);
+        Integer integer = cloudCommonItemFeignClient.updateItemById(tbItem);
 
         TbItemDesc tbItemDesc = new TbItemDesc();
         tbItemDesc.setItemId(tbItem.getId());

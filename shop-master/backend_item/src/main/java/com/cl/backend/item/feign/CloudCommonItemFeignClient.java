@@ -36,8 +36,8 @@ public interface CloudCommonItemFeignClient {
     @RequestMapping("/service/item/preUpdateItem")
     Map<String, Object> preUpdateItem(@RequestParam("itemId") Long itemId);
 
-    @RequestMapping("service/item/updateTbitem")
-    Integer updateTbitem(@RequestBody TbItem tbItem);
+    @RequestMapping("service/item/updateItemById")
+    Integer updateItemById(@RequestBody TbItem tbItem);
 
 
     //---------------/Service/ItemCategory

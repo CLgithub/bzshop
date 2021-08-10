@@ -69,8 +69,8 @@ public class ItemController {
      * @param tbItem
      * @return
      */
-    @RequestMapping("/updateTbitem")
-    public Integer updateTbitem(@RequestBody TbItem tbItem){
+    @RequestMapping("/updateItemById")
+    public Integer updateItemById(@RequestBody TbItem tbItem){
         return this.itemService.updateItemById(tbItem);
     }
 
