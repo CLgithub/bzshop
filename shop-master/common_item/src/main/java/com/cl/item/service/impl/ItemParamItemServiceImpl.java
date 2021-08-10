@@ -6,6 +6,9 @@ import com.cl.pojo.TbItemParamExample;
 import com.cl.pojo.TbItemParamItem;
 import com.cl.pojo.TbItemParamItemExample;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,6 +20,7 @@ import java.util.List;
  * @Date 2021/3/4 22:37
  */
 @Service
+@CacheConfig(cacheNames="itemParamItem")
 public class ItemParamItemServiceImpl implements ItemParamItemService {
 
     @Resource
@@ -24,12 +28,14 @@ public class ItemParamItemServiceImpl implements ItemParamItemService {
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries = true)
     public Integer insertTbItemParamItem(TbItemParamItem tbItemParamItem) {
         return itemParamItemMapper.insert(tbItemParamItem);
     }
 
     @Override
     @LcnTransaction
+    @CacheEvict(allEntries = true)
     public Integer updateTbItemParamItem(TbItemParamItem tbItemParamItem) {
         tbItemParamItem.setUpdated(new Date());
         TbItemParamItemExample tbItemParamItemExample=new TbItemParamItemExample();
@@ -39,6 +45,7 @@ public class ItemParamItemServiceImpl implements ItemParamItemService {
     }
 
     @Override
+    @Cacheable(unless="#result == null")
     public TbItemParamItem selectTbItemParamItemByItemId(Long itemId) {
         TbItemParamItemExample tbItemParamItemExample=new TbItemParamItemExample();
         TbItemParamItemExample.Criteria criteria = tbItemParamItemExample.createCriteria();

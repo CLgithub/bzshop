@@ -293,9 +293,9 @@ export default {
                         num: this.product.num,
                         desc: this.product.desc,
                         image: this.uploadData.data,
-                        // itemParams: encodeURIComponent(
-                        //     setParams(this.paramsData, this.paramsGroup)
-                        // )
+                        itemParams: encodeURIComponent(
+                            setParams(this.paramsData, this.paramsGroup)
+                        )
                     })
                     .then(res => {
                         if (res.data.status !== 200) {
