@@ -22,6 +22,7 @@
         <module>backend_content</module>
         <module>frontend_portal</module>
         <module>frontend_search</module>
+        <module>frontend_cart</module>
     </modules>
 
     <!-- 依赖版本 -->

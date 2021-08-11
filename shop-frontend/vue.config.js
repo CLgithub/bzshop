@@ -19,7 +19,7 @@ module.exports = {
                 changeOrigin: true
             },
             '/shopcar_api': {
-                target: 'http://127.0.0.1:9030',
+                target: 'http://127.0.0.1:9040',
                 pathRewrite: {
                     '^/shopcar_api': ''
                 },
