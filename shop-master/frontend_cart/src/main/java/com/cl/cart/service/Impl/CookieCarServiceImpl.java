@@ -16,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @Author l
@@ -46,6 +44,17 @@ public class CookieCarServiceImpl implements CookieCarService {
         return Result.ok();
     }
 
+    @Override
+    public Result showCart(HttpServletRequest request, HttpServletResponse response) {
+        List<CartItem> list=new ArrayList<>();
+        Map<String, CartItem> cart = getCart(request);
+        Set<String> keys= cart.keySet();
+        for(String key:keys){
+            list.add(cart.get(key));
+        }
+        return Result.ok(list);
+    }
+
     /**
      * 4 将购物车通过Cookie写回给客户端浏览器
      * @param request
@@ -70,6 +79,7 @@ public class CookieCarServiceImpl implements CookieCarService {
         if(cartItem == null){
             CartItem cartItem1 = null;
             cartItem1 = this.getCartItem(tbItem);
+            cartItem1.setNum(num);
             cartItemMap.put(itemId.toString(), cartItem1);
         }else{
             cartItem.setNum(cartItem.getNum()+num);
@@ -93,7 +103,7 @@ public class CookieCarServiceImpl implements CookieCarService {
             for(Field field:declaredFields){
                 String name = field.getName();
                 Method getMethod= null;
-                    getMethod = tbItemClass.getDeclaredMethod("get" + StringUtils.capitalize(name), null);
+                    getMethod = tbItemClass.getDeclaredMethod("get" + StringUtils.capitalize(name));
                 Method setMethod= cartItemClass.getDeclaredMethod("set" + StringUtils.capitalize(name), field.getType());
                 Object invoke1 = setMethod.invoke(cartItem, getMethod.invoke(tbitem));
             }

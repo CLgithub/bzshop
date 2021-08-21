@@ -33,6 +33,27 @@ public class CarController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return Result.error("加入有误");
+        return Result.build(500, "error");
     }
+
+    /**
+     * 查看购物车
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/showCart")
+    public Result showCart(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
+        try {
+            if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
+                return cookieCarService.showCart(request, response);
+            }else {
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
+
+
 }

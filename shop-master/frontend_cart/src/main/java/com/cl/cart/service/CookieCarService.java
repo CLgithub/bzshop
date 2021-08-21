@@ -18,4 +18,12 @@ public interface CookieCarService {
      * @return
      */
     Result addItem(Long itemId, Integer num, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 在未登录的状态下，查看购物车
+     * @param request
+     * @param response
+     * @return
+     */
+    Result showCart(HttpServletRequest request, HttpServletResponse response);
 }
