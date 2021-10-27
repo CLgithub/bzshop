@@ -211,9 +211,7 @@ public final class CookieUtils {
 			    serverName = serverName.substring(8);
 			}
             final int end = serverName.indexOf(":");
-            System.out.println(end+" end......");
             serverName = serverName.substring(0, end);
-            System.out.println(serverName+" Server........");
             final String[] domains = serverName.split("\\.");
             int len = domains.length;
             if (len > 3) {

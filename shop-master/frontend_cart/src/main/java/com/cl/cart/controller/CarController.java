@@ -55,5 +55,28 @@ public class CarController {
         return Result.build(500, "error");
     }
 
+    /**
+     * 修改购物车中商品数量
+     * @param itemId
+     * @param userId
+     * @param num
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/updateItemNum")
+    public Result updateItemNum(@RequestParam Long itemId, @RequestParam String userId, @RequestParam Integer num, HttpServletRequest request, HttpServletResponse response){
+        try {
+            if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
+                return cookieCarService.updateItemNum(itemId, num, request, response);
+            }else {
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
+
 
 }

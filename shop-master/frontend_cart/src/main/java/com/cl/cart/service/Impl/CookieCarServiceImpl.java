@@ -134,5 +134,14 @@ public class CookieCarServiceImpl implements CookieCarService {
         return new HashMap<>();
     }
 
+    @Override
+    public Result updateItemNum(Long itemId, Integer num, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, CartItem> cart=this.getCart(request);
+        CartItem cartItem = cart.get(itemId.toString());
+        if(cartItem != null) cartItem.setNum(num);
+        this.addClientCookie(request,response,cart);
+        return Result.ok();
+    }
+
 
 }

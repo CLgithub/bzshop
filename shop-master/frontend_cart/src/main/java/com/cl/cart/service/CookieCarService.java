@@ -26,4 +26,14 @@ public interface CookieCarService {
      * @return
      */
     Result showCart(HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 修改购物车中商品数量
+     * @param itemId
+     * @param num
+     * @param request
+     * @param response
+     * @return
+     */
+    Result updateItemNum(Long itemId, Integer num, HttpServletRequest request, HttpServletResponse response);
 }
