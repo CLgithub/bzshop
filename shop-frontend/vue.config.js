@@ -40,7 +40,7 @@ module.exports = {
                 changeOrigin: true
             },
             "/register_api": {
-                target: 'http://127.0.0.1:9030',
+                target: 'http://127.0.0.1:9090',
                 pathRewrite: {
                     '^/register_api': ''
                 },
