@@ -38,7 +38,7 @@ public class CookieCarServiceImpl implements CookieCarService {
         // 2 查询商品
         TbItem tbItem = cloudCommonItemFeignClient.selectItemInfo(itemId);
         // 3 向购物车中添加商品
-        this.additemToCart(cartItemMap, tbItem, num, itemId);
+        this.additemToCart(cartItemMap, tbItem, num);
         // 4 将购物车通过Cookie写回给客户端浏览器
         addClientCookie(request, response, cartItemMap);
         return Result.ok();
@@ -63,22 +63,21 @@ public class CookieCarServiceImpl implements CookieCarService {
      */
     private void addClientCookie(HttpServletRequest request, HttpServletResponse response, Map<String, CartItem> cartItemMap) {
         String s = JsonUtils.objectToJson(cartItemMap);
-        CookieUtils.setCookie(request, response, this.cart_cookie_name, s, true);
+        CookieUtils.setCookie(request, response, cart_cookie_name, s, true);
     }
 
     /**
-     * 3 将商品添加到购物车中
-     * @param cartItemMap  购物车
-     * @param tbItem
+     * 将商品添加到购物车当中
+     * @param cartItemMap 购物车map
+     * @param tbItem 商品
      * @param num 数量
-     * @param itemId
      */
-    private void additemToCart(Map<String, CartItem> cartItemMap, TbItem tbItem, Integer num, Long itemId) {
+    private void additemToCart(Map<String, CartItem> cartItemMap, TbItem tbItem, Integer num ) {
+        Long itemId = tbItem.getId();
         // 从购物车中取商品
         CartItem cartItem = cartItemMap.get(itemId.toString());
         if(cartItem == null){
-            CartItem cartItem1 = null;
-            cartItem1 = this.getCartItem(tbItem);
+            CartItem cartItem1 = this.getCartItem(tbItem);
             cartItem1.setNum(num);
             cartItemMap.put(itemId.toString(), cartItem1);
         }else{
@@ -97,13 +96,13 @@ public class CookieCarServiceImpl implements CookieCarService {
     public CartItem getCartItem(TbItem tbitem) {
         try {
             CartItem cartItem = new CartItem();
+            // 相当于对象属性拷贝
             Class<CartItem> cartItemClass = CartItem.class;
             Class<TbItem> tbItemClass = TbItem.class;
             Field[] declaredFields = cartItemClass.getDeclaredFields();
             for(Field field:declaredFields){
                 String name = field.getName();
-                Method getMethod= null;
-                    getMethod = tbItemClass.getDeclaredMethod("get" + StringUtils.capitalize(name));
+                Method getMethod = tbItemClass.getDeclaredMethod("get" + StringUtils.capitalize(name));
                 Method setMethod= cartItemClass.getDeclaredMethod("set" + StringUtils.capitalize(name), field.getType());
                 Object invoke1 = setMethod.invoke(cartItem, getMethod.invoke(tbitem));
             }
@@ -140,6 +139,14 @@ public class CookieCarServiceImpl implements CookieCarService {
         CartItem cartItem = cart.get(itemId.toString());
         if(cartItem != null) cartItem.setNum(num);
         this.addClientCookie(request,response,cart);
+        return Result.ok();
+    }
+
+    @Override
+    public Result deleteItemFromCart(Long itemId, HttpServletRequest request, HttpServletResponse response) {
+        Map<String, CartItem> cartItemMap = getCart(request);
+        CartItem remove = cartItemMap.remove(itemId.toString());
+        addClientCookie(request,response,cartItemMap);
         return Result.ok();
     }
 

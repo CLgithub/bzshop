@@ -28,10 +28,10 @@ public final class CookieUtils {
     }
 
     /**
-     * 得到Cookie的值,
-     * 
+     * 根据cookie的key，得到cookie的值
      * @param request
      * @param cookieName
+     * @param isDecoder
      * @return
      */
     public static String getCookieValue(HttpServletRequest request, String cookieName, boolean isDecoder) {

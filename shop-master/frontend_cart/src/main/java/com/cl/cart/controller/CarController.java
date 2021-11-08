@@ -78,5 +78,27 @@ public class CarController {
         return Result.build(500, "error");
     }
 
+    /**
+     * 删除购物车中的商品
+     * @param itemId
+     * @param userId
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping("/deleteItemFromCart")
+    public Result deleteItemFromCart(@RequestParam Long itemId, @RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
+        try {
+            if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
+                return cookieCarService.deleteItemFromCart(itemId, request, response);
+            }else {
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
+
 
 }

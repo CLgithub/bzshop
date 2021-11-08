@@ -36,4 +36,13 @@ public interface CookieCarService {
      * @return
      */
     Result updateItemNum(Long itemId, Integer num, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 在未登录的状态下，删除购物车中的商品
+     * @param itemId
+     * @param request
+     * @param response
+     * @return
+     */
+    Result deleteItemFromCart(Long itemId, HttpServletRequest request, HttpServletResponse response);
 }
