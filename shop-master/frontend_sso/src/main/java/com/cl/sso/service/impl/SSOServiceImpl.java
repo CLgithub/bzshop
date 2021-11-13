@@ -1,11 +1,16 @@
 package com.cl.sso.service.impl;
 
+import com.cl.gzshop.utils.MD5Utils;
 import com.cl.gzshop.utils.Result;
 import com.cl.mapper.TbUserMapper;
+import com.cl.pojo.TbUser;
 import com.cl.pojo.TbUserExample;
 import com.cl.sso.service.SSOService;
+import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * 用户注册于登录业务层
@@ -33,6 +38,23 @@ public class SSOServiceImpl implements SSOService {
             return Result.error("数据已经存在");
         }
         return Result.ok(checkValue);
+    }
+
+
+    @Override
+    @LcnTransaction // 分布式事务
+    public Result userRegister(TbUser tbUser) {
+        // 将密码进行加密
+        String pwd = MD5Utils.digest(tbUser.getPassword());
+        tbUser.setPassword(pwd);
+        // 补齐数据
+        tbUser.setCreated(new Date());
+        tbUser.setUpdated(new Date());
+        int insert = tbUserMapper.insert(tbUser);
+        if(insert>0){
+            return Result.ok();
+        }
+        return null;
     }
 
 

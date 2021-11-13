@@ -1,6 +1,7 @@
 package com.cl.sso.service;
 
 import com.cl.gzshop.utils.Result;
+import com.cl.pojo.TbUser;
 
 /**
  * @Author l
@@ -15,4 +16,11 @@ public interface SSOService {
      * @return
      */
     Result checkUserInfo(String checkValue, int checkFlag);
+
+    /**
+     * 完成用户注册
+     * @param tbUser
+     * @return
+     */
+    Result userRegister(TbUser tbUser);
 }
