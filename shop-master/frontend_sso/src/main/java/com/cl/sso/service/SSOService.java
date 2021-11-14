@@ -3,6 +3,8 @@ package com.cl.sso.service;
 import com.cl.gzshop.utils.Result;
 import com.cl.pojo.TbUser;
 
+import java.util.Map;
+
 /**
  * @Author l
  * @Date 2021/11/9 23:31
@@ -18,9 +20,25 @@ public interface SSOService {
     Result checkUserInfo(String checkValue, int checkFlag);
 
     /**
-     * 完成用户注册
+     * 用户注册
      * @param tbUser
      * @return
      */
     Result userRegister(TbUser tbUser);
+
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
+    Result userLogin(String username, String password);
+
+    /**
+     * 缓存登录的用户token
+     * @param token
+     * @param tbUser
+     * @return
+     */
+    String cacheLoginToken(String token, TbUser tbUse);
 }

@@ -8,9 +8,12 @@ import com.cl.pojo.TbUserExample;
 import com.cl.sso.service.SSOService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import javax.crypto.KeyGenerator;
+import java.util.*;
 
 /**
  * 用户注册于登录业务层
@@ -18,10 +21,14 @@ import java.util.Date;
  * @Date 2021/11/9 23:31
  */
 @Service
+@CacheConfig(cacheNames = "SSO")
 public class SSOServiceImpl implements SSOService {
 
     @Autowired
     private TbUserMapper tbUserMapper;
+
+    @Autowired
+    private SSOService ssoService;
 
 
     @Override
@@ -55,6 +62,42 @@ public class SSOServiceImpl implements SSOService {
             return Result.ok();
         }
         return null;
+    }
+
+    @Override
+    public Result userLogin(String username, String password) {
+        // 根据用户名密码查询数据库
+        TbUser tbUser=this.login(username,password);
+        if(tbUser== null){
+            return Result.error("用户名或密码错误！");
+        }
+        String userToken= UUID.randomUUID().toString();
+        ssoService.cacheLoginToken(userToken, tbUser); // 将user缓存到redis
+        Map<String, String> map=new HashMap<>();
+        map.put("token", userToken);
+        map.put("userid", tbUser.getId().toString());
+        map.put("username", tbUser.getUsername());
+        return Result.ok(map);
+    }
+
+    @Override
+    @Cacheable(key = "#token")
+    public String cacheLoginToken(String token, TbUser tbUser) {
+        tbUser.setPassword("");
+        return tbUser.toString();
+    }
+
+    private TbUser login(String username, String password) {
+        String pwd = MD5Utils.digest(password);
+        TbUserExample example=new TbUserExample();
+        TbUserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsernameEqualTo(username);
+        criteria.andPasswordEqualTo(pwd);
+        List<TbUser> tbUsers = tbUserMapper.selectByExample(example);
+        if(tbUsers == null || tbUsers.size()==0){
+            return null;
+        }
+        return tbUsers.get(0);
     }
 
 

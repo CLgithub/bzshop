@@ -27,7 +27,7 @@ public class SSOController {
      * @param checkFlag 1：校验用户名是否存在，2：校验手机号是否存在
      * @return
      */
-    @RequestMapping("checkUserInfo/{checkValue}/{checkFlag}")
+    @RequestMapping("/checkUserInfo/{checkValue}/{checkFlag}")
     public Result checkUserInfo(@PathVariable String checkValue, @PathVariable int checkFlag){
         try {
             return ssoService.checkUserInfo(checkValue, checkFlag);
@@ -39,11 +39,11 @@ public class SSOController {
 
 
     /**
-     * 完成用户注册
+     * 用户注册
      * @param tbUser
      * @return
      */
-    @RequestMapping("userRegister")
+    @RequestMapping("/userRegister")
     public Result userRegister(TbUser tbUser){
         try {
             return ssoService.userRegister(tbUser);
@@ -52,4 +52,22 @@ public class SSOController {
         }
         return Result.build(500, "error");
     }
+
+
+    /**
+     * 用户登录
+     * @param username
+     * @param password
+     * @return
+     */
+    @RequestMapping("/userLogin")
+    public Result userLogin(@RequestParam String username, @RequestParam String password){
+        try {
+            return ssoService.userLogin(username, password);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
+
 }
