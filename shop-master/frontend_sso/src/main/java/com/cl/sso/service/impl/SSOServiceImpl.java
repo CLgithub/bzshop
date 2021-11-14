@@ -9,6 +9,7 @@ import com.cl.sso.service.SSOService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,7 @@ public class SSOServiceImpl implements SSOService {
     }
 
     @Override
+    @LcnTransaction
     public Result userLogin(String username, String password) {
         // 根据用户名密码查询数据库
         TbUser tbUser=this.login(username,password);
@@ -100,5 +102,10 @@ public class SSOServiceImpl implements SSOService {
         return tbUsers.get(0);
     }
 
+    @Override
+    @CacheEvict(key = "#token")
+    public Result logOut(String token) {
+        return Result.ok();
+    }
 
 }

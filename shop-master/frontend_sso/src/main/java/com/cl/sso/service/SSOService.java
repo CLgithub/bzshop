@@ -40,5 +40,12 @@ public interface SSOService {
      * @param tbUser
      * @return
      */
-    String cacheLoginToken(String token, TbUser tbUse);
+    String cacheLoginToken(String token, TbUser tbUser);
+
+    /**
+     * 用户登出
+     * @param token
+     * @return
+     */
+    Result logOut(String token);
 }

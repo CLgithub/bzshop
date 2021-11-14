@@ -70,4 +70,19 @@ public class SSOController {
         return Result.build(500, "error");
     }
 
+    /**
+     * 用户登出
+     * @param token
+     * @return
+     */
+    @RequestMapping("/logOut")
+    public Result logOut(@RequestParam String token){
+        try {
+            return ssoService.logOut(token);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
+
 }
