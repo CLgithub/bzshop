@@ -24,7 +24,7 @@ import java.util.Map;
  * @Date 2020/9/23 19:40
  */
 @Service
-@CacheConfig(cacheNames="itemCategory")
+@CacheConfig(cacheNames="backend:itemCategory")
 //@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ItemCategoryServiceImpl implements ItemCategoryService{
 

@@ -27,7 +27,7 @@ import java.util.Map;
  * @Date 2020/9/21 20:35
  */
 @Service
-@CacheConfig(cacheNames="item")
+@CacheConfig(cacheNames="backend:item")
 public class ItemServiceImpl implements ItemService{
 
     @Resource

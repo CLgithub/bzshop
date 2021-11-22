@@ -19,7 +19,7 @@ import java.util.List;
  * @Date 2021/3/4 22:24
  */
 @Service
-@CacheConfig(cacheNames="itemDesc")
+@CacheConfig(cacheNames="backend:itemDesc")
 public class ItemDescServiceImpl implements ItemDescService {
 
     @Resource

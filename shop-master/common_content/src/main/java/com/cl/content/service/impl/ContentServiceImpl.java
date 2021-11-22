@@ -24,7 +24,7 @@ import java.util.*;
  * @Date 2021/6/4 16:32
  */
 @Service
-@CacheConfig(cacheNames="content")
+@CacheConfig(cacheNames="backend:content")
 public class ContentServiceImpl implements ContentService {
 
     @Autowired

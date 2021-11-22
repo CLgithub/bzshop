@@ -20,7 +20,7 @@ import java.util.List;
  * @Date 2021/3/4 22:37
  */
 @Service
-@CacheConfig(cacheNames="itemParamItem")
+@CacheConfig(cacheNames="backend:itemParamItem")
 public class ItemParamItemServiceImpl implements ItemParamItemService {
 
     @Resource
