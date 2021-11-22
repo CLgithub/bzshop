@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "cloud-common-item")
 public interface CloudCommonItemFeignClient {
 
+    /**
+     * 查询商品
+     * @param itemId
+     * @return
+     */
     @RequestMapping("/service/item/selectItemInfo")
     TbItem selectItemInfo(@RequestParam("itemId") Long itemId);
 

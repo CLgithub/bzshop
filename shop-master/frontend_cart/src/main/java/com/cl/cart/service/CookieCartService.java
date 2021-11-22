@@ -1,13 +1,18 @@
 package com.cl.cart.service;
 
+import com.cl.gzshop.utils.CartItem;
 import com.cl.gzshop.utils.Result;
+import com.cl.pojo.TbItem;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse; /**
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
+/**
  * @Author l
  * @Date 2021/8/11 15:35
  */
-public interface CookieCarService {
+public interface CookieCartService {
 
     /**
      * 在未登录的情况下，添加商品到购物车🛒
@@ -45,4 +50,12 @@ public interface CookieCarService {
      * @return
      */
     Result deleteItemFromCart(Long itemId, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 将商品添加到购物车当中
+     * @param cartItemMap 购物车map
+     * @param tbItem 商品
+     * @param num 数量
+     */
+    void additemToCart(Map<String, CartItem> cartItemMap, TbItem tbItem, Integer num );
 }

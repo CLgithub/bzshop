@@ -1,7 +1,7 @@
 package com.cl.cart.service.Impl;
 
 import com.cl.cart.feign.CloudCommonItemFeignClient;
-import com.cl.cart.service.CookieCarService;
+import com.cl.cart.service.CookieCartService;
 import com.cl.gzshop.utils.CartItem;
 import com.cl.gzshop.utils.CookieUtils;
 import com.cl.gzshop.utils.JsonUtils;
@@ -23,7 +23,7 @@ import java.util.*;
  * @Date 2021/8/11 15:36
  */
 @Service
-public class CookieCarServiceImpl implements CookieCarService {
+public class CookieCartServiceImpl implements CookieCartService {
 
     @Autowired
     private CloudCommonItemFeignClient cloudCommonItemFeignClient;
@@ -72,7 +72,8 @@ public class CookieCarServiceImpl implements CookieCarService {
      * @param tbItem 商品
      * @param num 数量
      */
-    private void additemToCart(Map<String, CartItem> cartItemMap, TbItem tbItem, Integer num ) {
+    @Override
+    public void additemToCart(Map<String, CartItem> cartItemMap, TbItem tbItem, Integer num ) {
         Long itemId = tbItem.getId();
         // 从购物车中取商品
         CartItem cartItem = cartItemMap.get(itemId.toString());

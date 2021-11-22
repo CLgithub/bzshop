@@ -22,7 +22,7 @@ import java.util.*;
  * @Date 2021/11/9 23:31
  */
 @Service
-@CacheConfig(cacheNames = "SSO")
+@CacheConfig(cacheNames = "frontend:SSO:redis")
 public class SSOServiceImpl implements SSOService {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.cl.cart.controller;
 
-import com.cl.cart.service.CookieCarService;
+import com.cl.cart.service.CookieCartService;
+import com.cl.cart.service.RedisCartService;
 import com.cl.gzshop.utils.Result;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,29 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/frontend_cart/cart")
-public class CarController {
+public class CartController {
 
     @Autowired
-    private CookieCarService cookieCarService;
+    private CookieCartService cookieCartService;
+    @Autowired
+    private RedisCartService redisCartService;
 
+    /**
+     * 添加商品到购物车🛒
+     * @param itemId
+     * @param userId
+     * @param num
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping("/addItem")
     public Result addItem(@RequestParam Long itemId, @RequestParam String userId, @RequestParam(defaultValue = "1") Integer num, HttpServletRequest request, HttpServletResponse response){
         try {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
-                return cookieCarService.addItem(itemId, num, request, response);
-            }else {
-
+                return cookieCartService.addItem(itemId, num, request, response);
+            }else { // 在登录专题下，向购物车添加商品
+                return redisCartService.addItem(itemId, num, userId);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -45,7 +57,7 @@ public class CarController {
     public Result showCart(@RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
         try {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
-                return cookieCarService.showCart(request, response);
+                return cookieCartService.showCart(request, response);
             }else {
 
             }
@@ -68,7 +80,7 @@ public class CarController {
     public Result updateItemNum(@RequestParam Long itemId, @RequestParam String userId, @RequestParam Integer num, HttpServletRequest request, HttpServletResponse response){
         try {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
-                return cookieCarService.updateItemNum(itemId, num, request, response);
+                return cookieCartService.updateItemNum(itemId, num, request, response);
             }else {
 
             }
@@ -90,7 +102,7 @@ public class CarController {
     public Result deleteItemFromCart(@RequestParam Long itemId, @RequestParam String userId, HttpServletRequest request, HttpServletResponse response){
         try {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
-                return cookieCarService.deleteItemFromCart(itemId, request, response);
+                return cookieCartService.deleteItemFromCart(itemId, request, response);
             }else {
 
             }
