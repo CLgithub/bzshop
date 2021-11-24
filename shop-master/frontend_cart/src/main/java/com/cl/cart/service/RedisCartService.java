@@ -17,4 +17,10 @@ public interface RedisCartService {
      */
     Result addItem(Long itemId, Integer num, String userId);
 
+    /**
+     * 在登录状态下查看购物车
+     * @param userId
+     * @return
+     */
+    Result showCart(String userId);
 }

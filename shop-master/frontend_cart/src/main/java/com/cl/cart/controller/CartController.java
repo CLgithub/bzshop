@@ -59,7 +59,7 @@ public class CartController {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
                 return cookieCartService.showCart(request, response);
             }else {
-
+                return redisCartService.showCart(userId);
             }
         }catch (Exception e){
             e.printStackTrace();

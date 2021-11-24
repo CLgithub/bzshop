@@ -4,13 +4,10 @@ import com.cl.cart.feign.CloudCommonItemFeignClient;
 import com.cl.cart.service.CookieCartService;
 import com.cl.cart.service.RedisCartService;
 import com.cl.gzshop.utils.CartItem;
-import com.cl.gzshop.utils.JsonUtils;
 import com.cl.gzshop.utils.Result;
 import com.cl.pojo.TbItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +44,7 @@ public class RedisCartServiceImpl implements RedisCartService {
         return Result.ok();
     }
 
+
     /**
      * 根据用户ID, userId查询redis中的用户购物车
      * @param userId
@@ -64,6 +62,16 @@ public class RedisCartServiceImpl implements RedisCartService {
     }
 
 
+    @Override
+    public Result showCart(String userId) {
+        List<CartItem> list=new ArrayList<>();
+        Map<String, CartItem> cart = getCart(userId);
+        Set<String> keys= cart.keySet();
+        for(String key:keys){
+            list.add(cart.get(key));
+        }
+        return Result.ok(list);
+    }
 
 
 
