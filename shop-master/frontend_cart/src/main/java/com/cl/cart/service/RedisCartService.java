@@ -23,4 +23,21 @@ public interface RedisCartService {
      * @return
      */
     Result showCart(String userId);
+
+    /**
+     * 在登录状态下，修改购物车中的商品数量
+     * @param itemId
+     * @param num
+     * @param userId
+     * @return
+     */
+    Result updateItemNum(Long itemId, Integer num, String userId);
+
+    /**
+     * 在登录状态下，删除购物车当中的商品
+     * @param itemId
+     * @param userId
+     * @return
+     */
+    Result deleteItemFromCart(Long itemId, String userId);
 }

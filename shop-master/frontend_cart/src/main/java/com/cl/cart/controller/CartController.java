@@ -82,7 +82,7 @@ public class CartController {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
                 return cookieCartService.updateItemNum(itemId, num, request, response);
             }else {
-
+                return redisCartService.updateItemNum(itemId, num, userId);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -104,7 +104,7 @@ public class CartController {
             if(StringUtils.isBlank(userId)){ //如果userId为空，即未登录
                 return cookieCartService.deleteItemFromCart(itemId, request, response);
             }else {
-
+                return redisCartService.deleteItemFromCart(itemId, userId);
             }
         }catch (Exception e){
             e.printStackTrace();

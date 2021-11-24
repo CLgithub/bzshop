@@ -73,7 +73,22 @@ public class RedisCartServiceImpl implements RedisCartService {
         return Result.ok(list);
     }
 
+    @Override
+    public Result updateItemNum(Long itemId, Integer num, String userId) {
+        Map<String, CartItem> cart = getCart(userId);
+        CartItem cartItem = cart.get(itemId.toString());
+        if(cartItem != null) cartItem.setNum(num);
+        redisTemplate.opsForHash().put(frontend_cart_redis_key,userId,cart);
+        return Result.ok();
+    }
 
+    @Override
+    public Result deleteItemFromCart(Long itemId, String userId) {
+        Map<String, CartItem> cartItemMap = getCart(userId);
+        CartItem remove = cartItemMap.remove(itemId.toString());
+        redisTemplate.opsForHash().put(frontend_cart_redis_key,userId,cartItemMap);
+        return Result.ok();
+    }
 
 
 }
