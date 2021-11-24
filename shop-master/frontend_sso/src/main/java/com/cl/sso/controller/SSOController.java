@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * 用户注册于登录
  * @Author l
@@ -61,9 +63,9 @@ public class SSOController {
      * @return
      */
     @RequestMapping("/userLogin")
-    public Result userLogin(@RequestParam String username, @RequestParam String password){
+    public Result userLogin(@RequestParam String username, @RequestParam String password, HttpServletRequest request){
         try {
-            return ssoService.userLogin(username, password);
+            return ssoService.userLogin(username, password, request);
         }catch (Exception e){
             e.printStackTrace();
         }

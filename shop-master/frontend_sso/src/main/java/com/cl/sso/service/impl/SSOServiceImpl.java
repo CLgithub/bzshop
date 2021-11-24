@@ -1,19 +1,21 @@
 package com.cl.sso.service.impl;
 
-import com.cl.gzshop.utils.MD5Utils;
-import com.cl.gzshop.utils.Result;
+import com.cl.gzshop.utils.*;
 import com.cl.mapper.TbUserMapper;
 import com.cl.pojo.TbUser;
 import com.cl.pojo.TbUserExample;
 import com.cl.sso.service.SSOService;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -30,6 +32,14 @@ public class SSOServiceImpl implements SSOService {
 
     @Autowired
     private SSOService ssoService;
+
+    @Value("${cart_cookie_name}")
+    private String cart_cookie_name;
+    @Value("${frontend_cart_redis_key}")
+    private String frontend_cart_redis_key;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 
     @Override
@@ -67,7 +77,7 @@ public class SSOServiceImpl implements SSOService {
 
     @Override
     @LcnTransaction
-    public Result userLogin(String username, String password) {
+    public Result userLogin(String username, String password, HttpServletRequest request) {
         // 根据用户名密码查询数据库
         TbUser tbUser=this.login(username,password);
         if(tbUser== null){
@@ -79,8 +89,63 @@ public class SSOServiceImpl implements SSOService {
         map.put("token", userToken);
         map.put("userid", tbUser.getId().toString());
         map.put("username", tbUser.getUsername());
+        // 将临时购物车中的商品同步到购物车中
+        sysncCart(tbUser.getId().toString(),request);
         return Result.ok(map);
     }
+
+    /**
+     * 同步临时购物车到用户购物车
+     * @param userId
+     * @param request
+     */
+    private void sysncCart(String userId, HttpServletRequest request) {
+        Map<String, CartItem> cookieCart= getCookieCart(request); // 得到临时购物车
+        Map<String, CartItem> redisCart = getRedisCart(userId); // 得到用户购物车
+        // 删除用户购物车中包含有临时购物车中的商品
+        for(Iterator<String> iterator = cookieCart.keySet().iterator();iterator.hasNext();){
+            String key1= iterator.next();
+            CartItem remove = redisCart.remove(key1);
+        }
+        redisCart.putAll(cookieCart);
+        // 保存永久购物车
+        redisTemplate.opsForHash().put(frontend_cart_redis_key,userId,redisCart);
+    }
+
+    /**
+     * 获取临时购物车
+     * @param request
+     * @return
+     */
+    private Map<String, CartItem> getCookieCart(HttpServletRequest request) {
+        String cartJson= CookieUtils.getCookieValue(request, cart_cookie_name, true);
+        if(StringUtils.isBlank(cartJson)){ // 2 临时购物车不存在
+            return new HashMap<>();
+        }
+        try{
+            // 需要做json转换
+            return JsonUtils.jsonToMap(cartJson, CartItem.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new HashMap<>();
+    }
+    /**
+     * 根据用户ID, userId查询redis中的用户购物车
+     * @param userId
+     * @return
+     */
+    private Map<String, CartItem> getRedisCart(String userId) {
+        try {
+            Map<String, CartItem> map= (Map<String, CartItem>) redisTemplate.opsForHash().get(frontend_cart_redis_key, userId);
+            if(map==null) return new HashMap<>();
+            return map;
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return new HashMap<String, CartItem>();
+    }
+
 
     @Override
     @Cacheable(key = "#token")

@@ -3,7 +3,7 @@ package com.cl.sso.service;
 import com.cl.gzshop.utils.Result;
 import com.cl.pojo.TbUser;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author l
@@ -30,9 +30,10 @@ public interface SSOService {
      * 用户登录
      * @param username
      * @param password
+     * @param request
      * @return
      */
-    Result userLogin(String username, String password);
+    Result userLogin(String username, String password, HttpServletRequest request);
 
     /**
      * 缓存登录的用户token
