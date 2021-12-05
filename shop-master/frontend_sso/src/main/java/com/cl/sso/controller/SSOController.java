@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用户注册于登录
@@ -63,9 +64,9 @@ public class SSOController {
      * @return
      */
     @RequestMapping("/userLogin")
-    public Result userLogin(@RequestParam String username, @RequestParam String password, HttpServletRequest request){
+    public Result userLogin(@RequestParam String username, @RequestParam String password, HttpServletRequest request, HttpServletResponse response){
         try {
-            return ssoService.userLogin(username, password, request);
+            return ssoService.userLogin(username, password, request, response);
         }catch (Exception e){
             e.printStackTrace();
         }

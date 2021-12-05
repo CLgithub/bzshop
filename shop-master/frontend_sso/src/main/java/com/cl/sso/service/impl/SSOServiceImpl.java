@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -77,7 +78,7 @@ public class SSOServiceImpl implements SSOService {
 
     @Override
     @LcnTransaction
-    public Result userLogin(String username, String password, HttpServletRequest request) {
+    public Result userLogin(String username, String password, HttpServletRequest request, HttpServletResponse response) {
         // 根据用户名密码查询数据库
         TbUser tbUser=this.login(username,password);
         if(tbUser== null){
@@ -89,8 +90,8 @@ public class SSOServiceImpl implements SSOService {
         map.put("token", userToken);
         map.put("userid", tbUser.getId().toString());
         map.put("username", tbUser.getUsername());
-        // 将临时购物车中的商品同步到购物车中
-        sysncCart(tbUser.getId().toString(),request);
+        // 将临时购物车中的商品同步到购物车中，并且删除临时购物车中的商品
+        sysncAndDelCookieCart(tbUser.getId().toString(),request, response);
         return Result.ok(map);
     }
 
@@ -99,7 +100,7 @@ public class SSOServiceImpl implements SSOService {
      * @param userId
      * @param request
      */
-    private void sysncCart(String userId, HttpServletRequest request) {
+    private void sysncAndDelCookieCart(String userId, HttpServletRequest request, HttpServletResponse response) {
         Map<String, CartItem> cookieCart= getCookieCart(request); // 得到临时购物车
         Map<String, CartItem> redisCart = getRedisCart(userId); // 得到用户购物车
         // 删除用户购物车中包含有临时购物车中的商品
@@ -110,6 +111,11 @@ public class SSOServiceImpl implements SSOService {
         redisCart.putAll(cookieCart);
         // 保存永久购物车
         redisTemplate.opsForHash().put(frontend_cart_redis_key,userId,redisCart);
+        // 清空临时购物车中的商品并保存
+//        cookieCart.clear();
+//        String s = JsonUtils.objectToJson(cookieCart);
+//        CookieUtils.setCookie(request, response, cart_cookie_name, s, true);
+        CookieUtils.deleteCookie(request, response, cart_cookie_name);
     }
 
     /**
