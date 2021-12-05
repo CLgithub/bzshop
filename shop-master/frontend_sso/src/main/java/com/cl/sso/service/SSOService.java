@@ -36,13 +36,6 @@ public interface SSOService {
      */
     Result userLogin(String username, String password, HttpServletRequest request, HttpServletResponse response);
 
-    /**
-     * 缓存登录的用户token
-     * @param token
-     * @param tbUser
-     * @return
-     */
-    String cacheLoginToken(String token, TbUser tbUser);
 
     /**
      * 用户登出

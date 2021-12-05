@@ -25,7 +25,6 @@ import java.util.*;
  * @Date 2021/11/9 23:31
  */
 @Service
-@CacheConfig(cacheNames = "frontend:SSO:redis")
 public class SSOServiceImpl implements SSOService {
 
     @Autowired
@@ -38,6 +37,8 @@ public class SSOServiceImpl implements SSOService {
     private String cart_cookie_name;
     @Value("${frontend_cart_redis_key}")
     private String frontend_cart_redis_key;
+    @Value("${frontend_user_redis_key}")
+    private String frontend_user_redis_key;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -85,7 +86,8 @@ public class SSOServiceImpl implements SSOService {
             return Result.error("用户名或密码错误！");
         }
         String userToken= UUID.randomUUID().toString();
-        ssoService.cacheLoginToken(userToken, tbUser); // 将user缓存到redis
+//        ssoService.cacheLoginToken(userToken, tbUser); // 将user缓存到redis
+        redisTemplate.opsForHash().put(frontend_user_redis_key,userToken,tbUser);  // 将user缓存到redis
         Map<String, String> map=new HashMap<>();
         map.put("token", userToken);
         map.put("userid", tbUser.getId().toString());
@@ -153,13 +155,6 @@ public class SSOServiceImpl implements SSOService {
     }
 
 
-    @Override
-    @Cacheable(key = "#token")
-    public String cacheLoginToken(String token, TbUser tbUser) {
-        tbUser.setPassword("");
-        return tbUser.toString();
-    }
-
     private TbUser login(String username, String password) {
         String pwd = MD5Utils.digest(password);
         TbUserExample example=new TbUserExample();
@@ -174,8 +169,9 @@ public class SSOServiceImpl implements SSOService {
     }
 
     @Override
-    @CacheEvict(key = "#token")
     public Result logOut(String token) {
+//        Boolean delete = redisTemplate.delete(frontend_user_redis_key+":"+token);
+        Long delete = redisTemplate.opsForHash().delete(frontend_user_redis_key, token);
         return Result.ok();
     }
 

@@ -40,4 +40,12 @@ public interface RedisCartService {
      * @return
      */
     Result deleteItemFromCart(Long itemId, String userId);
+
+    /**
+     * 去结算
+     * @param ids
+     * @param userId
+     * @return
+     */
+    Result goSettlement(String[] ids, String userId);
 }

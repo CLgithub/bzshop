@@ -90,5 +90,18 @@ public class RedisCartServiceImpl implements RedisCartService {
         return Result.ok();
     }
 
+    @Override
+    public Result goSettlement(String[] ids, String userId) {
+        // 获取购物车
+        Map<String, CartItem> cart = getCart(userId);
+        List<CartItem> list=new ArrayList<>();
+        // 从购物车中获取选中的商品
+        for(String itemId: ids){
+            CartItem cartItem = cart.get(itemId);
+            list.add(cartItem);
+        }
+        return Result.ok(list);
+    }
+
 
 }

@@ -112,5 +112,20 @@ public class CartController {
         return Result.build(500, "error");
     }
 
+    /**
+     * 去结算
+     * @param ids
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/goSettlement")
+    public Result goSettlement(@RequestParam String[] ids,@RequestParam String userId){
+        try {
+            return redisCartService.goSettlement(ids, userId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.build(500, "error");
+    }
 
 }
