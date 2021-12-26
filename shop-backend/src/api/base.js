@@ -1,10 +1,10 @@
 const base = {
     baseUrl:"/api",
-    // basePrductUrl:"/product_api/backend_item",
-    basePrductUrl:"/product_api",
-    // baseContentUrl:"/content_api/backend_content",
-    baseContentUrl:"/content_api",
+    basePrductUrl:"/product_api/backend_item",   // 后台商品根url
+    baseContentUrl:"/content_api/backend_content",      // 后台内容根url
+    
     login:"/api/login",              // 登陆地址
+    
     prodcutList:"/backend/item/selectTbItemAllByPage", // 商品列表地址
     selectItemCategoryByParentId:"/backend/itemCategory/selectItemCategoryByParentId", // 类目选择地址
     insertTbItem:"/backend/item/insertTbItem",    // 商品添加地址
@@ -15,6 +15,7 @@ const base = {
     selectItemParamAll:"/backend/itemParam/selectItemParamAll",   // 规格参数查询地址
     insertItemParam: '/backend/itemParam/insertItemParam',   // 规格参数添加地址
     deleteItemParamById:"/backend/itemParam/deleteItemParamById", // 规格参数删除地址
+
     selectContentCategoryByParentId:"/content/selectContentCategoryByParentId", // 分类内容管理 查询地址
     insertContentCategory:"/content/insertContentCategory",  // 内容分类管理 添加接口
     deleteContentCategoryById:"/content/deleteContentCategoryById",  // 内容分类管理 删除接口
