@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2021/8/11 15:22
  */
 @RestController
-@RequestMapping("/frontend_cart/cart")
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired

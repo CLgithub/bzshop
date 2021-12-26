@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Date 2021/11/9 23:26
  */
 @RestController
-@RequestMapping("/frontend_sso/sso")
+@RequestMapping("/sso")
 public class SSOController {
 
     @Autowired

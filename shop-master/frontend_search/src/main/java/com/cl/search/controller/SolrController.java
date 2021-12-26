@@ -15,7 +15,7 @@ import java.util.List;
  * @Date 2021/7/8 23:31
  */
 @RestController
-@RequestMapping("/frontend_search/search")
+@RequestMapping("/search")
 public class SolrController {
 
     @Autowired
