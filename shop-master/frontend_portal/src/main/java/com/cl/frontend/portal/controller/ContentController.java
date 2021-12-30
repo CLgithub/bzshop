@@ -27,6 +27,7 @@ public class ContentController {
     @RequestMapping("/selectFrontendContentByAD")
     public Result selectFrontendContentByAD(){
         try {
+//            Thread.sleep(2000);
             return contentService.selectItemCategoryAll();
         } catch (Exception e){
             e.printStackTrace();
