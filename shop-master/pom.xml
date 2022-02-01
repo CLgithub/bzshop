@@ -25,6 +25,7 @@
         <module>frontend_cart</module>
         <module>frontend_sso</module>
         <module>common_zuul</module>
+        <module>common_config</module>
     </modules>
 
     <!-- 依赖版本 -->
