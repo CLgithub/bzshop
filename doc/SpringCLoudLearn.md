@@ -10,6 +10,64 @@
 
 # 三、服务降级
 
+服务熔断是服务降级的一种特殊情况
+
+* 使用openfeign实现服务降级
+
+  1. feign接口
+
+     ```java
+     # feign接口注解添加fallback，指向托底类
+     @FeignClient(value = "cloud-common-item", fallback = CloudCommonItemFeignCLientFallbackFactory.class)
+     ```
+
+  2. 托底类
+
+     ```java
+     # 继承被托底的接口，对接口进行托底重写
+     @Component
+     public class CloudCommonItemFeignCLientFallbackFactory implements CloudCommonItemFeignClient {
+        Logger logger=LoggerFactory.getLogger(this.getClass());
+     
+         @Override
+         public Object selectTbItemAllByPage1(Integer page, Integer rows) {
+             logger.warn(Thread.currentThread().getStackTrace()[1].getMethodName()+" fallback!");
+             return null;
+         }
+     
+         @Override
+         public PageResult selectTbItemAllByPage(Integer page, Integer rows) {
+             logger.warn(Thread.currentThread().getStackTrace()[1].getMethodName()+" fallback!");
+             return null;
+         }
+       。。。。
+     }
+     ```
+
+  3. 调用feign接口的方法，做好因有托底而产生的变动
+
+     ```java
+         @Override
+         @LcnTransaction
+         public Result insertTbItem(TbItem tbItem, String desc, String itemParams) {
+           	....
+             Integer integer = cloudCommonItemFeignClient.insertTbItem(tbItem);
+             // 补齐商品描述对象
+             ....
+             Integer integer1 = cloudCommonItemFeignClient.insertItemDesc(tbItemDesc);
+             // 补齐商品规格参数
+            	....
+             Integer integer2 = cloudCommonItemFeignClient.insertTbItemParamItem(tbItemParamItem);
+             // cloudCommonItemFeignClient 加了服务降级，若插入错误，会出发服务降级，返回null，但并不会出发事务回滚，故加次判断来抛出异常处罚事务回滚
+             if(integer==null || integer1==null || integer2==null){
+                 throw new RuntimeException();
+             }
+             return Result.ok();
+         }
+     ```
+
+     
+
 # 四、服务网关
 
 # 五、服务配置

@@ -65,6 +65,10 @@ public class ItemServiceImpl implements ItemService{
         tbItemParamItem.setParamData(itemParams);
         tbItemParamItem.setUpdated(new Date());
         Integer integer2 = cloudCommonItemFeignClient.insertTbItemParamItem(tbItemParamItem);
+        // cloudCommonItemFeignClient 加了服务降级，若插入错误，会出发服务降级，返回null，但并不会出发事务回滚，故加次判断来抛出异常处罚事务回滚
+        if(integer==null || integer1==null || integer2==null){
+            throw new RuntimeException();
+        }
         return Result.ok();
     }
 
@@ -104,7 +108,9 @@ public class ItemServiceImpl implements ItemService{
         tbItemParamItem.setItemId(tbItem.getId());
         tbItemParamItem.setParamData(itemParams);
         Integer integer2 = cloudCommonItemFeignClient.updateTbItemParamItem(tbItemParamItem);
-
+        if(integer==null || integer1==null || integer2==null){
+            throw new RuntimeException();
+        }
         return Result.ok();
     }
 }

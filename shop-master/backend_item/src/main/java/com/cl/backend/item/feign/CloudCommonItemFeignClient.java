@@ -1,7 +1,7 @@
 package com.cl.backend.item.feign;
 
+import com.cl.backend.item.fallback.CloudCommonItemFeignCLientFallbackFactory;
 import com.cl.gzshop.utils.PageResult;
-import com.cl.gzshop.utils.Result;
 import com.cl.pojo.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ import java.util.Map;
  * @Date 2020/9/24 09:30
  */
 @Component
-@FeignClient(value = "cloud-common-item")
+@FeignClient(value = "cloud-common-item", fallback = CloudCommonItemFeignCLientFallbackFactory.class)
 public interface CloudCommonItemFeignClient {
 
     //----------------/Service/Item

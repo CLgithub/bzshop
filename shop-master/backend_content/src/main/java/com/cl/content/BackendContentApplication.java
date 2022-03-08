@@ -10,9 +10,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @Author l
  * @Date 2021/3/16 22:03
  */
-@SpringBootApplication
-@EnableDiscoveryClient
-@EnableFeignClients //启用openFeign
+@SpringBootApplication  //springBoot
+@EnableDiscoveryClient  // 服务注册发现
+@EnableFeignClients // 启用openFeign
 @EnableDistributedTransaction   // 启用分布式事务管理器 tx-lcn
 public class BackendContentApplication {
     public static void main(String[] args) {

@@ -24,7 +24,7 @@ public class MyConfig {
     /**
      * 设置每秒产生的令牌数
      */
-    private static final RateLimiter RATE_LIMIT_FILTER = RateLimiter.create(1);
+    private static final RateLimiter RATE_LIMIT_FILTER = RateLimiter.create(10);
 
     @Bean
     public ZuulFilter getRateLimitFilter(){
