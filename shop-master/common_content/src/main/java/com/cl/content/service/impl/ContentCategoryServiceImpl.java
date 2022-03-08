@@ -5,6 +5,8 @@ import com.cl.mapper.TbContentCategoryMapper;
 import com.cl.pojo.TbContentCategory;
 import com.cl.pojo.TbContentCategoryExample;
 import com.codingapi.txlcn.tc.annotation.LcnTransaction;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,10 +18,20 @@ import java.util.List;
  * @Date 2021/3/16 22:35
  */
 @Service
+@RefreshScope   // 配置中心 动态刷新
 public class ContentCategoryServiceImpl implements ContentCategoryService {
+
+    @Value("${long1}")
+    private Long long1;
 
     @Resource
     TbContentCategoryMapper tbContentCategoryMapper;
+
+
+    @Override
+    public long long1() {
+        return long1;
+    }
 
     @Override
     public List<TbContentCategory> selectContentCategoryByParentId(Long parentId) {
@@ -96,6 +108,8 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
         tbContentCategory.setUpdated(new Date());
         return tbContentCategoryMapper.updateByPrimaryKeySelective(tbContentCategory);
     }
+
+
 
 
 }

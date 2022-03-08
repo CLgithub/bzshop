@@ -39,4 +39,5 @@ public interface ContentCategoryService {
     Integer updateContentCategory(TbContentCategory tbContentCategory);
 
 
+    long long1();
 }

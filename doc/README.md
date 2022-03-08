@@ -1,8 +1,9 @@
 # 百战商城
 
-<img src='./images/1.png'>
+![](./images/1.png)
 
 ## 前端
+
 1. 安装node环境
 	
 	```
@@ -42,7 +43,7 @@
 
 ### 搭建项目
 #### 创建注册中心
-	
+
 * intellij打包
 	* 右侧`Maven Project`，选中需要打包的模块，`install`，
 

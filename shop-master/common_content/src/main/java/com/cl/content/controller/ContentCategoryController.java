@@ -2,6 +2,8 @@ package com.cl.content.controller;
 
 import com.cl.content.service.ContentCategoryService;
 import com.cl.pojo.TbContentCategory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,10 +19,18 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/service/contentCategory")
+//@RefreshScope   // 配置中心 动态刷新
 public class ContentCategoryController {
 
     @Resource
     ContentCategoryService contentCategoryService;
+
+
+
+    @RequestMapping("/testConfig")
+    public long testConfig(){
+        return contentCategoryService.long1();
+    }
 
     /**
      * 根据parentid查询子节点
