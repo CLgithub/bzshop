@@ -26,6 +26,7 @@
         <module>frontend_sso</module>
         <module>common_zuul</module>
         <module>common_config</module>
+        <module>common_gateway</module>
     </modules>
 
     <!-- 依赖版本 -->

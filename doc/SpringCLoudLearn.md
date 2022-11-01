@@ -6,6 +6,14 @@
 
 # 一、注册中心
 
+## 1.1 Eureka
+
+## 1.2 Zookeeper
+
+## 1.3 Consul
+
+几者的区别，各自优劣势
+
 # 二、服务调用
 
 # 三、服务降级
@@ -66,9 +74,138 @@
          }
      ```
 
+  4. 代理服务，服务超时时的托底数据
+
+     ```java
+     @Component
+     public class CloudBackendContentFallback implements FallbackProvider {
+     	   /**
+          * 代理的哪个服务
+          * @return
+          */
+         @Override
+         public String getRoute() {
+             return "cloud-backend-content";
+         }
+          /**
+          * 超时时的托底数据
+          * @param route
+          * @param cause
+          * @return
+          */
+         @Override
+         public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
+         }
+     
+     }
+     ```
+
      
 
 # 四、服务网关
+
+## 4.1 zuul2
+
+1. pom.xml
+
+   ```xml
+   <!-- zuul starter -->
+   <dependency>
+     <groupId>org.springframework.cloud</groupId>
+     <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+   </dependency>
+   ```
+
+2. application.properties
+
+   ```properties
+   # 全局配置，设置网关服务调用上游服务时，发送请求头为true，解决在网关服务中不传递请求头的问题(比如Cookie)
+   zuul.sensitive-headers=true
+   
+   # 配置路由规则 /backend_item/** 都交给 cloud-backend-item
+   zuul.routes.cloud-backend-item.path=/backend_item/**
+   # 配置路由规则 /backend_content/** 都交给 cloud-backend-content
+   zuul.routes.cloud-backend-content.path=/backend_content/**
+   # 前台首页
+   zuul.routes.cloud-frontend-portal.path=/frontend_portal/**
+   # 购物车
+   zuul.routes.cloud-frontend-cart.path=/frontend_cart/**
+   # 搜索
+   zuul.routes.cloud-frontend-search.path=/frontend_search/**
+   # 登录
+   zuul.routes.cloud-frontend-sso.path=/frontend_sso/**
+   # 订单
+   # zuul.routes..path=/frontend_order/**
+   
+   # 配置网关请求服务的超时时间
+   # 设置第一层 hystrix 超时时间, 默认为线程池隔离，默认超时时间为1000ms, 超过这个时长未获取到服务结果，报异常
+   hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=15000
+   # 设置第二层 Ribbon 的超时时间 Ribbon 超时时长不能大于 hystrix 超时时长
+   # 请求连接时间 默认5000ms
+   ribbon.ConnectTimeout=5000
+   # 处理超时时间
+   ribbon.ReadTimeout=5000
+   ```
+
+3. 主启动类
+
+   ```java
+   @EnableZuulProxy            // 开启网关代理功能
+   ```
+
+4. config类
+
+   ```java
+   @SpringBootConfiguration
+   public class MyConfig {
+   
+       Logger logger= LoggerFactory.getLogger(this.getClass());
+   
+       /**
+        * 设置每秒产生的令牌数
+        */
+       private static final RateLimiter RATE_LIMIT_FILTER = RateLimiter.create(10);
+   
+       @Bean
+       public ZuulFilter getRateLimitFilter(){
+           return new ZuulFilter() {
+               @Override
+               public String filterType() {
+                   return FilterConstants.PRE_TYPE;
+               }
+               @Override
+               public int filterOrder() {
+                   return FilterConstants.SERVLET_30_WRAPPER_FILTER_ORDER-1;
+               }
+               @Override
+               public boolean shouldFilter() {
+                   return true;
+               }
+               @Override
+               public Object run() throws ZuulException {
+                   if(!RATE_LIMIT_FILTER.tryAcquire()){
+                       RequestContext currentContext = RequestContext.getCurrentContext();
+                       currentContext.setSendZuulResponse(false);
+                       currentContext.setResponseStatusCode(HttpStatus.TOO_MANY_REQUESTS.value());
+                       logger.warn("请求过多，限量访问！");
+                   }
+                   return null;
+               }
+           };
+       }
+   }
+   ```
+
+
+
+## 4.2 gateway
+
+
+
+* gateway相比zuul的优势
+  * gateway基于移步处理，zuul基于servlet同步通信设计
+  * 速度是zuul的1.6倍
+  * 
 
 # 五、服务配置
 
