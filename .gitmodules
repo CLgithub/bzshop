@@ -1,3 +1,3 @@
 [submodule "bzshop_config"]
 	path = bzshop_config
-	url = git@github.com:CLgithub/bzshop_config.git
+	url = git@gitlab.com:CLgithub/bzshop_config.git
