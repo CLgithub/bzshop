@@ -21,9 +21,6 @@ import java.util.Map;
 public interface CloudCommonItemFeignClient {
 
     //----------------/Service/Item
-    @RequestMapping("/service/item/selectTbItemAllByPage1")
-    Object selectTbItemAllByPage1(@RequestParam("page") Integer page, @RequestParam("rows") Integer rows);
-
     @RequestMapping("/service/item/selectTbItemAllByPage")
     PageResult selectTbItemAllByPage(@RequestParam("page") Integer page, @RequestParam("rows") Integer rows);
 

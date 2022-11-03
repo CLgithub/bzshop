@@ -18,14 +18,6 @@ public interface ItemService {
      * @param rows
      * @return
      */
-    PageInfo selectTbItemAllByPage1(Integer page, Integer rows);
-
-    /**
-     * 查询所有商品并分页
-     * @param page
-     * @param rows
-     * @return
-     */
     PageResult selectTbItemAllByPage(Integer page, Integer rows);
 
 

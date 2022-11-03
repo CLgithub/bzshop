@@ -4,11 +4,16 @@ import com.cl.gzshop.utils.PageResult;
 import com.cl.item.service.ItemService;
 import com.cl.pojo.TbItem;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -19,20 +24,20 @@ import java.util.Map;
 @RequestMapping("/service/item")
 public class ItemController {
 
+    Logger logger= LoggerFactory.getLogger(this.getClass());
+
     @Resource
     private ItemService itemService;
-    /**
-     * 查询商品数据
-     * @return
-     */
-    @RequestMapping("/selectTbItemAllByPage1")
-    public PageInfo selectTbItemAllByPage1(@RequestParam Integer page,@RequestParam Integer rows){
-        PageInfo pageInfo = itemService.selectTbItemAllByPage1(page, rows);
-        return pageInfo;
-    }
 
     @RequestMapping("/selectTbItemAllByPage")
     public PageResult selectTbItemAllByPage(@RequestParam Integer page, @RequestParam Integer rows){
+        try {
+            InetAddress addr = InetAddress.getLocalHost();
+            String hostName = addr.getHostName();
+            logger.info(System.currentTimeMillis()+"-"+hostName);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         return itemService.selectTbItemAllByPage(page,rows);
     }
 

@@ -40,21 +40,6 @@ public class ItemServiceImpl implements ItemService{
     private TbItemCatMapper tbItemCatMapper;
 
     @Override
-    public PageInfo selectTbItemAllByPage1(Integer page, Integer rows) {
-        Page<Object> page1= PageHelper.startPage(page, rows);
-
-        TbItemExample example = new TbItemExample();
-        TbItemExample.Criteria criteria = example.createCriteria();
-        criteria.andStatusEqualTo((byte) 1);    // 添加条件status为1的
-        List<TbItem> list=tbItemMapper.selectByExample(example);
-
-
-        PageInfo<TbItem> pageInfo=new PageInfo<>(list);
-
-        return pageInfo;
-    }
-
-    @Override
     @Cacheable(unless="#result == null")
     public PageResult selectTbItemAllByPage(Integer page, Integer rows) {
         Page<Object> page1 = PageHelper.startPage(page, rows);

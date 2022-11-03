@@ -27,11 +27,6 @@ public class ItemServiceImpl implements ItemService{
     private CloudCommonItemFeignClient cloudCommonItemFeignClient;
 
     @Override
-    public Object selectTbItemAllByPage1(Integer page, Integer rows) {
-        return cloudCommonItemFeignClient.selectTbItemAllByPage1(page, rows);
-    }
-
-    @Override
     public Result selectTbItemAllByPage(Integer page, Integer rows) {
         PageResult pageResult = cloudCommonItemFeignClient.selectTbItemAllByPage(page, rows);
         if(pageResult!=null&&pageResult.getResult()!=null&&pageResult.getResult().size()>0){

@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface ItemService {
 
-    Object selectTbItemAllByPage1(Integer page, Integer rows);
-
     /**
      * 查询商品并分页
      * @param page

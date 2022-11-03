@@ -20,12 +20,6 @@ public class CloudCommonItemFeignCLientFallbackFactory implements CloudCommonIte
     Logger logger=LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public Object selectTbItemAllByPage1(Integer page, Integer rows) {
-        logger.warn(Thread.currentThread().getStackTrace()[1].getMethodName()+" fallback!");
-        return null;
-    }
-
-    @Override
     public PageResult selectTbItemAllByPage(Integer page, Integer rows) {
         logger.warn(Thread.currentThread().getStackTrace()[1].getMethodName()+" fallback!");
         return null;

@@ -3,10 +3,15 @@ package com.cl.backend.item.controller;
 import com.cl.backend.item.service.ItemService;
 import com.cl.gzshop.utils.Result;
 import com.cl.pojo.TbItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -17,27 +22,10 @@ import java.util.Map;
 @RequestMapping("/backend/item")
 public class ItemController {
 
+    Logger logger= LoggerFactory.getLogger(this.getClass());
+
     @Resource
     private ItemService itemService;
-
-    /**
-     * 查询商品并分页处理
-     * @param page
-     * @param rows
-     * @return
-     */
-    @RequestMapping("/selectTbItemAllByPage1")
-    public Object selectTbItemAllByPage1(
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer rows ){
-
-        try {
-            return itemService.selectTbItemAllByPage1(page, rows);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     /**
      * 查询商品并分页处理
@@ -49,7 +37,13 @@ public class ItemController {
     public Result selectTbItemAllByPage(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer rows){
-
+        try {
+            InetAddress addr = InetAddress.getLocalHost();
+            String hostName = addr.getHostName();
+            logger.info(System.currentTimeMillis()+"-"+hostName);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         try {
             return itemService.selectTbItemAllByPage(page, rows);
         } catch (Exception e){
